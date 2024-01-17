@@ -5,7 +5,7 @@ const Layout = () => {
     return (
         <Drawer
             screenOptions={{
-                drawerActiveBackgroundColor: '#00BFFF',
+                drawerActiveBackgroundColor: '#673147',
                 drawerActiveTintColor: '#fff',
                 drawerLabelStyle: {
                     marginLeft: -20
