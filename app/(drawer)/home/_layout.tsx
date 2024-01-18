@@ -1,16 +1,39 @@
-import { View, Text } from 'react-native';
+import { useTheme } from 'tamagui';
 import React from 'react';
 import { Stack } from 'expo-router';
+import { DrawerToggleButton } from '@react-navigation/drawer';
 
 const Layout = () => {
+    const theme = useTheme();
     return (
         <Stack
             screenOptions={{
-                headerShown: false
+                headerShown: true,
+                headerStyle: {
+                    backgroundColor: theme.purple7.get()
+                },
+                headerTintColor: '#fff'
             }}
         >
-            <Stack.Screen name="index" />
-            <Stack.Screen name="movie/[id]" />
+            <Stack.Screen
+                name="index"
+                options={{
+                    title: 'Movie Master',
+                    headerLeft: () => <DrawerToggleButton tintColor="#fff" />
+                }}
+            />
+            <Stack.Screen
+                name="movie/[id]"
+                options={{
+                    title: 'Movie Details'
+                }}
+            />
+            <Stack.Screen
+                name="tv/[id]"
+                options={{
+                    title: 'TV Show Details'
+                }}
+            />
         </Stack>
     );
 };

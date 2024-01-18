@@ -45,7 +45,7 @@ const Home = () => {
                 {searchQuery.data?.results?.length! > 0 ? 'Search Results' : 'Trending'}
             </Subtitle>
             {(trendingQuery.isLoading || searchQuery.isLoading) && (
-                <Spinner size="large" color={'$purple7'} />
+                <Spinner   />
             )}
             <ScrollView
                 horizontal

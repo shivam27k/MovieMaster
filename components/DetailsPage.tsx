@@ -1,0 +1,92 @@
+import React from 'react';
+import { MediaType } from 'interfaces/apiResults';
+import { ImageBackground } from 'react-native';
+import { useQuery } from '@tanstack/react-query';
+import { getMovieDetails } from 'services/api';
+import { Image, Paragraph, ScrollView, Spinner, Text, View, XStack, YStack } from 'tamagui';
+import { Container } from 'tamagui.config';
+
+type DetailsPageProps = {
+    id: string;
+    mediaType: MediaType;
+};
+
+const DetailsPage = ({ id, mediaType }: DetailsPageProps) => {
+    const movieQuery = useQuery({
+        queryKey: [mediaType, id],
+        queryFn: () => getMovieDetails(+id, mediaType)
+    });
+
+    const responseMovie = movieQuery?.data;
+
+    console.log('responseMovie', responseMovie);
+
+    return (
+        <Container p={0}>
+            {movieQuery.isLoading ? (
+                <Spinner size="large" color={'$purple7'} />
+            ) : responseMovie?.title ? (
+                <ScrollView>
+                    <ImageBackground
+                        source={{
+                            uri: `https://image.tmdb.org/t/p/w300${responseMovie?.backdrop_path}`
+                        }}
+                        style={{
+                            width: '100%',
+                            height: 370
+                        }}
+                    >
+                        <View
+                            m={10}
+                            w={220}
+                            h={320}
+                            bw={5}
+                            br={6}
+                            borderColor={'#fff'}
+                            shadowColor={'#000'}
+                            shadowOffset={{ width: 2, height: 4 }}
+                            shadowRadius={50}
+                        >
+                            <Image
+                                source={{
+                                    uri: `https://image.tmdb.org/t/p/w300${responseMovie?.poster_path}`
+                                }}
+                                w={210}
+                                h={310}
+                                br={6}
+                            />
+                        </View>
+                    </ImageBackground>
+                    <Container>
+                        <XStack alignItems="center" gap={10}>
+                            <Text
+                                lineHeight={33}
+                                fontSize={30}
+                                color={'$purple9Dark'}
+                                fontWeight={'900'}
+                            >
+                                {responseMovie?.title || responseMovie?.name}
+                            </Text>
+                            <Text
+                                lineHeight={18}
+                                fontSize={15}
+                                color={'$purple9Dark'}
+                                fontWeight={'600'}
+                            >
+                                {`(${new Date(responseMovie?.release_date! || responseMovie?.first_air_date!).getFullYear()})`}
+                            </Text>
+                        </XStack>
+                        <Paragraph color={'$purple7Dark'}>{responseMovie?.tagline}</Paragraph>
+                        <Paragraph color={'black'} marginTop={10}>
+                            {responseMovie?.overview}
+                        </Paragraph>
+                    </Container>
+                </ScrollView>
+            ) : (
+                <></>
+            )}
+        </Container>
+    );
+};
+
+export default DetailsPage;

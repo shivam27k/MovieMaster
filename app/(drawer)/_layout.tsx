@@ -13,10 +13,7 @@ const Layout = () => {
                 drawerLabelStyle: {
                     marginLeft: -20
                 },
-                headerStyle: {
-                    backgroundColor: theme.purple7.get()
-                },
-                headerTintColor: 'white'
+                headerShown: false
             }}
         >
             <Drawer.Screen
@@ -32,7 +29,6 @@ const Layout = () => {
                 name="favorites"
                 options={{
                     title: 'My Favorites',
-                    headerShown: true,
                     drawerIcon: ({ color, size }) => (
                         <Ionicons name="star-outline" size={size} color={color} />
                     )
