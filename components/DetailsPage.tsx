@@ -19,13 +19,11 @@ const DetailsPage = ({ id, mediaType }: DetailsPageProps) => {
 
     const responseMovie = movieQuery?.data;
 
-    console.log('responseMovie', responseMovie);
-
     return (
         <Container p={0}>
             {movieQuery.isLoading ? (
                 <Spinner size="large" color={'$purple7'} />
-            ) : responseMovie?.title ? (
+            ) : responseMovie?.title || responseMovie?.name ? (
                 <ScrollView>
                     <ImageBackground
                         source={{
@@ -35,6 +33,7 @@ const DetailsPage = ({ id, mediaType }: DetailsPageProps) => {
                             width: '100%',
                             height: 370
                         }}
+                        alt={responseMovie?.title}
                     >
                         <View
                             m={10}
@@ -51,6 +50,7 @@ const DetailsPage = ({ id, mediaType }: DetailsPageProps) => {
                                 source={{
                                     uri: `https://image.tmdb.org/t/p/w300${responseMovie?.poster_path}`
                                 }}
+                                alt={responseMovie?.title}
                                 w={210}
                                 h={310}
                                 br={6}
@@ -76,14 +76,24 @@ const DetailsPage = ({ id, mediaType }: DetailsPageProps) => {
                                 {`(${new Date(responseMovie?.release_date! || responseMovie?.first_air_date!).getFullYear()})`}
                             </Text>
                         </XStack>
-                        <Paragraph color={'$purple7Dark'}>{responseMovie?.tagline}</Paragraph>
-                        <Paragraph color={'black'} marginTop={10}>
-                            {responseMovie?.overview}
-                        </Paragraph>
+                        <YStack
+                            animation={'lazy'}
+                            enterStyle={{
+                                opacity: 0,
+                                y: 10
+                            }}
+                        >
+                            <Paragraph color={'$purple7Dark'}>{responseMovie?.tagline}</Paragraph>
+                            <Paragraph color={'black'} marginTop={10}>
+                                {responseMovie?.overview}
+                            </Paragraph>
+                        </YStack>
                     </Container>
                 </ScrollView>
             ) : (
-                <></>
+                <Container>
+                    <Text>{responseMovie?.status_message}</Text>
+                </Container>
             )}
         </Container>
     );
