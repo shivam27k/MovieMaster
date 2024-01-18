@@ -13,7 +13,7 @@ export const getTrending = async (): Promise<TrendingResult> => {
 
 export const getSearchResults = async (query: string): Promise<TrendingResult> => {
     const response = await fetch(
-        `https://api.themoviedb.org/3/trending/all/day?language=en-US&api_key=${API_KEY}&query=${encodeURIComponent(query)}`
+        `https://api.themoviedb.org/3/search/multi?language=en-US&api_key=${API_KEY}&query=${encodeURIComponent(query)}`
     );
 
     const jsonResult = await response.json();

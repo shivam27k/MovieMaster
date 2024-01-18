@@ -12,13 +12,13 @@ const MovieCard = ({ movie }: MovieCardProps) => {
         <Link href={`/(drawer)/home/movie/${movie.id}`} asChild>
             <Card
                 hoverStyle={{
-                    scale: 1.001,
-                    transitionDuration: '0.25s'
+                    scale: 0.925
                 }}
-                pressStyle={{ scale: 0.95, transitionDuration: '0.25s', transitionDelay: '0.1s' }}
+                pressStyle={{ scale: 0.975 }}
                 elevate
                 scale={0.9}
                 br={10}
+                animation={'bouncy'}
             >
                 <Card.Header w={'$full'} p={0} br={10}>
                     <Image
