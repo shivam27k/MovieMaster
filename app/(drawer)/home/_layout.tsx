@@ -8,7 +8,10 @@ const Layout = () => {
             screenOptions={{
                 headerShown: false
             }}
-        ></Stack>
+        >
+            <Stack.Screen name="index" />
+            <Stack.Screen name="movie/[id]" />
+        </Stack>
     );
 };
 
