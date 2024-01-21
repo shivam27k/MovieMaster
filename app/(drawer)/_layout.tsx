@@ -2,6 +2,7 @@ import React from 'react';
 import Drawer from 'expo-router/drawer';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from 'tamagui';
+
 const Layout = () => {
     const theme = useTheme();
 
