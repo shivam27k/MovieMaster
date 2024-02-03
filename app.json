@@ -36,6 +36,14 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.moviemaster"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "6d6548a7-167b-4ee2-bf30-97b7542af79a"
+      }
     }
   }
 }
