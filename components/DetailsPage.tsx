@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MediaType } from 'interfaces/apiResults';
 import { ImageBackground } from 'react-native';
 import { useQuery } from '@tanstack/react-query';
 import { getMovieDetails } from 'services/api';
 import { Image, Paragraph, ScrollView, Spinner, Text, View, XStack, YStack } from 'tamagui';
 import { Container } from 'tamagui.config';
+import { useMMKVBoolean, useMMKVObject } from 'react-native-mmkv';
+import { Favorite } from 'interfaces/favourites';
 
 type DetailsPageProps = {
     id: string;
@@ -12,12 +14,18 @@ type DetailsPageProps = {
 };
 
 const DetailsPage = ({ id, mediaType }: DetailsPageProps) => {
+    const [isFavourite, setIsFavourite] = useMMKVBoolean(`${mediaType}-${id}`);
+
+    const [favourites, setFavourites] = useMMKVObject<Favorite[]>('favourites');
+
     const movieQuery = useQuery({
         queryKey: [mediaType, id],
         queryFn: () => getMovieDetails(+id, mediaType)
     });
 
     const responseMovie = movieQuery?.data;
+
+    const toggleFavourite = () => {};
 
     return (
         <Container p={0}>
@@ -59,21 +67,11 @@ const DetailsPage = ({ id, mediaType }: DetailsPageProps) => {
                     </ImageBackground>
                     <Container>
                         <XStack alignItems="center" gap={10}>
-                            <Text
-                                lineHeight={33}
-                                fontSize={30}
-                                color={'$purple9Dark'}
-                                fontWeight={'900'}
-                            >
-                                {responseMovie?.title || responseMovie?.name}
-                            </Text>
-                            <Text
-                                lineHeight={18}
-                                fontSize={15}
-                                color={'$purple9Dark'}
-                                fontWeight={'600'}
-                            >
-                                {`(${new Date(responseMovie?.release_date! || responseMovie?.first_air_date!).getFullYear()})`}
+                            <Text fontSize={30} color={'$purple9Dark'} fontWeight={'900'} flex={1}>
+                                {responseMovie?.title || responseMovie?.name}{' '}
+                                <Text fontSize={15} color={'$purple9Dark'} fontWeight={'600'}>
+                                    {`(${new Date(responseMovie?.release_date! || responseMovie?.first_air_date!).getFullYear()})`}
+                                </Text>
                             </Text>
                         </XStack>
                         <YStack
